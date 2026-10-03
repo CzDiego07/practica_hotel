@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habTipoPrecio;
+import com.practica.hoteles.models.Enum_EstadoHab;
+import com.practica.hoteles.models.Habitaciones;
 import com.practica.hoteles.repository.habitacionRepository;
 
 @RestController
@@ -29,9 +31,18 @@ public class habitacionController {
         return habitacionJPA.obtenerHabitacionesPorHotel();
     }
 
-    //Consulta 3. ¿Cuales son los tipos de cada habitacion y su precio base?
+    // Consulta 3. ¿Cuales son los tipos de cada habitacion y su precio base?
     @GetMapping("/tipos/precio")
-    public List<habTipoPrecio> obtenerTipoPrecio(){
+    public List<habTipoPrecio> obtenerTipoPrecio() {
         return habitacionJPA.obtenerHotelHabTipoPrecio();
+    }
+
+    // Consulta 4. Habitaciones "Disponibles"
+    // Nota adicional, al llamar a la entidad "Habitaciones", obtendra todos los
+    // datos tanto de habitaciones,como de la entidad "Hotel" al tenerla dentro de
+    // la misma
+    @GetMapping("/disponibles")
+    public List<Habitaciones> obtenerDisponibles() {
+        return (List<Habitaciones>) habitacionJPA.findByEstado(Enum_EstadoHab.Disponible); // Se puede cambiar por Disponible o Mantenimiento(1 a la vez)
     }
 }
