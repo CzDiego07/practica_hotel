@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.practica.hoteles.Dtos.habPorHotelEstado;
+import com.practica.hoteles.Dtos.habTipoPrecio;
 import com.practica.hoteles.repository.habitacionRepository;
 
 @RestController
@@ -28,4 +29,9 @@ public class habitacionController {
         return habitacionJPA.obtenerHabitacionesPorHotel();
     }
 
+    //Consulta 3. ¿Cuales son los tipos de cada habitacion y su precio base?
+    @GetMapping("/tipos/precio")
+    public List<habTipoPrecio> obtenerTipoPrecio(){
+        return habitacionJPA.obtenerHotelHabTipoPrecio();
+    }
 }
