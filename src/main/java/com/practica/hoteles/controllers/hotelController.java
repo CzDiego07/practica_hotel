@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,12 @@ public class hotelController {
     @GetMapping("/habitaciones/libres")
     public List<habLibrePorHotel> obtenerHabLibres() {
         return hotelJPA.contarHabLibrePorHotel();
+    }
+
+    // Consulta 6. ¿Cuantas habitaciones disponibles tiene un hotel en especifico?
+    @GetMapping("/habitaciones/libres/{id}")
+    public List<habLibrePorHotel> obtenerHabLibresPorID(@PathVariable Integer id) {
+        return hotelJPA.contarHabLibrePorHotel(id);
     }
 
 }
