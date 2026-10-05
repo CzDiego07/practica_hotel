@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.practica.hoteles.Dtos.habLibrePorHotel;
+import com.practica.hoteles.Dtos.habTotalPorHotel;
 import com.practica.hoteles.models.Hoteles;
 
 public interface hotelRepository extends JpaRepository<Hoteles, Integer> {
@@ -32,4 +33,13 @@ public interface hotelRepository extends JpaRepository<Hoteles, Integer> {
             "GROUP BY h.id_hotel, h.nombre")
     List<habLibrePorHotel> contarHabLibrePorHotel(@Param("id") Integer id);
 
+    // Crear la consulta para obtener la cantidad de habitaciones que tiene cada
+    // hotel
+    @Query("SELECT "
+            + " h.nombre AS hotel, "
+            + "COUNT(ha.id_habitacion) AS total "
+            + "FROM Hoteles h "
+            + "JOIN h.habitaciones ha "
+            + "GROUP BY h.id_hotel, h.nombre")
+    List<habTotalPorHotel> contarHabTotalHotel();
 }
