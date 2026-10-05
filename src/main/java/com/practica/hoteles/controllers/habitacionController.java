@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.practica.hoteles.Dtos.habCapacidad;
@@ -49,8 +49,9 @@ public class habitacionController {
     }
 
     // Consulta 8. Precio de habitaciones para X personas
-    @GetMapping("/capacidad/{cantidad}")
-    public List<habCapacidad> obtenerHabitacionPorCapacidad(@PathVariable Integer cantidad){
+    // Cambio de PathVariable a RequestParam.
+    @GetMapping("/capacidad")
+    public List<habCapacidad> obtenerHabitacionPorCapacidad(@RequestParam Integer cantidad){
         return habitacionJPA.obtenerPrecioPorCapacidad(cantidad);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.practica.hoteles.Dtos.habLibrePorHotel;
+import com.practica.hoteles.Dtos.habManPorHotel;
 import com.practica.hoteles.Dtos.habTotalPorHotel;
 import com.practica.hoteles.models.Hoteles;
 import com.practica.hoteles.repository.hotelRepository;
@@ -44,7 +45,13 @@ public class hotelController {
 
     // Consulta 7. ¿Cuantas habitaciones tiene cada hotel?
     @GetMapping("/habitaciones/total")
-    public List<habTotalPorHotel> obtenerTotalHabHotel(){
-        return  hotelJPA.contarHabTotalHotel();
+    public List<habTotalPorHotel> obtenerTotalHabHotel() {
+        return hotelJPA.contarHabTotalHotel();
+    }
+
+    // Consulta 10. ¿Cuantas habitaciones estan en mantenimiento en cada hotel?
+    @GetMapping("/habitaciones/mantenimiento")
+    public List<habManPorHotel> obtenerHabManPorHotel() {
+        return hotelJPA.contarHabMantenimeitnoPorHotel();
     }
 }
