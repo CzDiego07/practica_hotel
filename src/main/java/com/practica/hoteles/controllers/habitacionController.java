@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habTipoPrecio;
 import com.practica.hoteles.models.Enum_EstadoHab;
@@ -45,5 +47,10 @@ public class habitacionController {
     public List<Habitaciones> obtenerDisponibles() {
         return (List<Habitaciones>) habitacionJPA.findByEstado(Enum_EstadoHab.Disponible); // Se puede cambiar por Disponible o Mantenimiento(1 a la vez)
     }
-    
+
+    // Consulta 8. Precio de habitaciones para X personas
+    @GetMapping("/capacidad/{cantidad}")
+    public List<habCapacidad> obtenerHabitacionPorCapacidad(@PathVariable Integer cantidad){
+        return habitacionJPA.obtenerPrecioPorCapacidad(cantidad);
+    }
 }

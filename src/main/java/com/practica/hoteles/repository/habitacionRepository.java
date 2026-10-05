@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habTipoPrecio;
 import com.practica.hoteles.models.Enum_EstadoHab;
@@ -36,4 +38,15 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
 
     // Buscar habitaciones segun por el estado(Disponible/Mantenimiento)
     public List<Habitaciones> findByEstado(Enum_EstadoHab estado);
+
+    //Consulta 8. Obtener precios de Hotel, Habitacion, piso, numero para una cantidad de gente especifica o mayor. Ordenados primero los de la misma capacidad y despues los mayores.
+    @Query("SELECT "+
+        "h.nombre AS hotel, t.capacidad AS capacidad, t.precio_base AS precio, ha.numero AS numero, ha.piso AS piso "+
+        "FROM Habitaciones ha "+
+        "INNER JOIN ha.hotel h "+
+        "INNER JOIN ha.tipo t " +
+        "WHERE t.capacidad >= :capacidad "+
+        "ORDER BY t.capacidad ASC"
+    )
+    public List<habCapacidad> obtenerPrecioPorCapacidad(@Param("capacidad") Integer capacidad);
 }
