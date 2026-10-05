@@ -45,4 +45,5 @@ public class habitacionController {
     public List<Habitaciones> obtenerDisponibles() {
         return (List<Habitaciones>) habitacionJPA.findByEstado(Enum_EstadoHab.Disponible); // Se puede cambiar por Disponible o Mantenimiento(1 a la vez)
     }
+    
 }
