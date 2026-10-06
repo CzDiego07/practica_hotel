@@ -31,11 +31,13 @@ public class hotelController {
         return (List<Hoteles>) hotelJPA.findAll();
     }
 
-    // Cambios en consultas 5, 6 y 10. 
-    // Se refactorizo la funcion de conteo de Hoteles Segun Estado y en un hotel especifico.
+    // Cambios en consultas 5, 6 y 10.
+    // Se refactorizo la funcion de conteo de Hoteles Segun Estado y en un hotel
+    // especifico.
     // Se hace uso de dos funciones con el mismo nombre
     // Se definieron dos parametros: Enum estado, Integer id
-    // Solo estado hace la consulta para todos los hoteles pero cuenta unicamente el estado indicado
+    // Solo estado hace la consulta para todos los hoteles pero cuenta unicamente el
+    // estado indicado
     // Al agregar ID, se enfoca unicamente en el hotel seleccionado
     // Consulta 5. ¿Cuantas habitaciones estan disponibles en cada hotel?
     @GetMapping("/habitaciones/libres")
@@ -58,8 +60,23 @@ public class hotelController {
 
     // Consulta 10. ¿Cuantas habitaciones estan en mantenimiento en cada hotel?
     @GetMapping("/habitaciones/mantenimiento")
-    public List<habConteoEstadoPorHotel> obtenerHabManPorHotel() {
+    public List<habConteoEstadoPorHotel> obtenerHabMantenimiento() {
         return hotelJPA.contarHabEstadoXPorHotel(Enum_EstadoHab.Mantenimiento); // Unicamente cuenta habitaciones en
                                                                                 // especifico
+    }
+
+    // Haciendo uso de la funcion refactorizada, se puede obtener por el estado
+    // Ocupado y en un hotel especifico
+    // Consulta 11. ¿Cuantas habitaciones estan en uso?
+    @GetMapping("/habitaciones/ocupadas")
+    public List<habConteoEstadoPorHotel> obtenerHabOcupadas() {
+        return hotelJPA.contarHabEstadoXPorHotel(Enum_EstadoHab.Ocupado); // Obtener conteo de habitaciones Ocupadas
+    }
+
+    // Consulta 12. ¿Cuantas habitaciones estan en uso en X hotel?
+    @GetMapping("/habitaciones/ocupadas/{id}")
+    public List<habConteoEstadoPorHotel> obtenerHabOcupadasPorID(@PathVariable Integer id) {
+        return hotelJPA.contarHabEstadoXPorHotel(Enum_EstadoHab.Ocupado, id); // Obtener conteo de habitaciones Ocupadas
+                                                                              // en un hotel en especifico
     }
 }
