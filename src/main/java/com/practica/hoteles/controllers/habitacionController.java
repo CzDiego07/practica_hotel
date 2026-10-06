@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
+import com.practica.hoteles.Dtos.habPrecioPromedioPorHotel;
 import com.practica.hoteles.Dtos.habTipoPrecio;
 import com.practica.hoteles.models.Enum_EstadoHab;
 import com.practica.hoteles.models.Habitaciones;
@@ -45,13 +46,22 @@ public class habitacionController {
     // la misma
     @GetMapping("/disponibles")
     public List<Habitaciones> obtenerDisponibles() {
-        return (List<Habitaciones>) habitacionJPA.findByEstado(Enum_EstadoHab.Disponible); // Se puede cambiar por Disponible o Mantenimiento(1 a la vez)
+        return (List<Habitaciones>) habitacionJPA.findByEstado(Enum_EstadoHab.Disponible); // Se puede cambiar por
+                                                                                           // Disponible o
+                                                                                           // Mantenimiento(1 a la vez)
     }
 
     // Consulta 8. Precio de habitaciones para X personas
     // Cambio de PathVariable a RequestParam.
     @GetMapping("/capacidad")
-    public List<habCapacidad> obtenerHabitacionPorCapacidad(@RequestParam Integer cantidad){
+    public List<habCapacidad> obtenerHabitacionPorCapacidad(@RequestParam Integer cantidad) {
         return habitacionJPA.obtenerPrecioPorCapacidad(cantidad);
+    }
+
+    // Consulta 13. ¿Cual es el precio promedio de una habitacion en cada hotel?
+    // Obtener precio promedio de las habitaciones segun cada hotel
+    @GetMapping("/precio/promedio")
+    public List<habPrecioPromedioPorHotel> obtenerPrecioPromedioPorHotel() {
+        return habitacionJPA.obtenerPrecioPromedioPorHotel();
     }
 }
