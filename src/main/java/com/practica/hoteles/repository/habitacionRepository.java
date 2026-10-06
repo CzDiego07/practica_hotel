@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.practica.hoteles.Dtos.cantidadTiposHab;
 import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPrecio;
@@ -88,6 +89,7 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
                         "    WHERE ha2.hotel.id_hotel = h.id_hotel" +
                         ")")
         List<habPrecio> obtenerHabPrecioBajo();
+
         @Query("SELECT " +
                         "h.nombre AS hotel, " +
                         "ha.numero AS habitacion, " +
@@ -104,4 +106,17 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
                         ")")
         List<habPrecio> obtenerHabPrecioAlto();
 
+        // Consulta 16. Cuantas habitaciones de cada tipo se tienen en la cadena
+        // hotelera
+        // Conteo de cuantas habitaciones tiene un tipo en especifico
+        @Query("SELECT " +
+                        "h.nombre AS hotel, " +
+                        "t.nombre AS tipo, " +
+                        "COUNT(ha) AS cantidad " +
+                        "FROM Habitaciones ha " +
+                        "INNER JOIN ha.hotel h " +
+                        "INNER JOIN ha.tipo t " +
+                        "GROUP BY h.id_hotel, h.nombre, t.id_tipo, t.nombre " +
+                        "ORDER BY h.nombre ASC, t.nombre ASC")
+        List<cantidadTiposHab> obtenerCantidadTiposPorHotel();
 }

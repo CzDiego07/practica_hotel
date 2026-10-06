@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.practica.hoteles.Dtos.cantidadTiposHab;
 import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPrecio;
@@ -75,5 +76,11 @@ public class habitacionController {
     @GetMapping ("precio/maximo")
     public  List <habPrecio> obtenerHabPrecioMaximo(){
         return habitacionJPA.obtenerHabPrecioAlto();
+    }
+
+    // Consulta 16. ¿Cuantas habitaciones se tiene por tipo en cada hotel?
+    @GetMapping("tipo/cantidad")
+    public  List <cantidadTiposHab> obtenerCantidadPorTipo(){
+        return  habitacionJPA.obtenerCantidadTiposPorHotel();
     }
 }
