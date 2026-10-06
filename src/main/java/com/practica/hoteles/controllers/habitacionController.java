@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,5 +83,11 @@ public class habitacionController {
     @GetMapping("tipo/cantidad")
     public  List <cantidadTiposHab> obtenerCantidadPorTipo(){
         return  habitacionJPA.obtenerCantidadTiposPorHotel();
+    }
+
+    // Consulta 17. ¿Que habitaciones se encuentran en un piso en especifico ?
+    @GetMapping ("piso/{numero}")
+    public List<Habitaciones> obtenerHabitacionesPorPiso(@PathVariable Integer numero){
+        return  habitacionJPA.findByPiso(numero);
     }
 }

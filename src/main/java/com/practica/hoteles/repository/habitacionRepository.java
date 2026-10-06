@@ -119,4 +119,8 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
                         "GROUP BY h.id_hotel, h.nombre, t.id_tipo, t.nombre " +
                         "ORDER BY h.nombre ASC, t.nombre ASC")
         List<cantidadTiposHab> obtenerCantidadTiposPorHotel();
+
+        // Consulta 17. Esta consulta filtra los pisos segun el piso que se asigna en el
+        // controller Habitacion.
+        List<Habitaciones> findByPiso(Integer piso);
 }
