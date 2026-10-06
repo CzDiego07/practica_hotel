@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
+import com.practica.hoteles.Dtos.habPrecio;
 import com.practica.hoteles.Dtos.habPrecioPromedioPorHotel;
 import com.practica.hoteles.Dtos.habTipoPrecio;
 import com.practica.hoteles.models.Enum_EstadoHab;
@@ -63,5 +64,16 @@ public class habitacionController {
     @GetMapping("/precio/promedio")
     public List<habPrecioPromedioPorHotel> obtenerPrecioPromedioPorHotel() {
         return habitacionJPA.obtenerPrecioPromedioPorHotel();
+    }
+
+    // Consutla 14. ¿Cual es la habitacion con precio mas bajo por hotel?
+    @GetMapping ("precio/minimo")
+    public List<habPrecio> obtenerHabPrecioMinimo(){
+        return  habitacionJPA.obtenerHabPrecioBajo();
+    }
+    // Consulta 15. ¿Cual es la habitacion con precio mas alto por hotel?
+    @GetMapping ("precio/maximo")
+    public  List <habPrecio> obtenerHabPrecioMaximo(){
+        return habitacionJPA.obtenerHabPrecioAlto();
     }
 }
