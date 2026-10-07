@@ -14,6 +14,7 @@ import com.practica.hoteles.Dtos.cantidadTiposHab;
 import com.practica.hoteles.Dtos.capacidadMaxHotel;
 import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
+import com.practica.hoteles.Dtos.habPorPisoExtremo;
 import com.practica.hoteles.Dtos.habPrecio;
 import com.practica.hoteles.Dtos.habPrecioPromedioPorHotel;
 import com.practica.hoteles.Dtos.habTipoPrecio;
@@ -111,5 +112,16 @@ public class habitacionController {
     @GetMapping("busqueda/tipo")
     public List<busquedaHabTipo> busquedaPorTipo(@RequestParam String tipo) {
         return habitacionJPA.buscarHabPorTipo(tipo);
+    }
+    // Consulta 23. ¿Qué habitaciones se encuentran en el piso más alto?
+    @GetMapping("/piso/maximo")
+    public List<habPorPisoExtremo> obtenerHabitacionesPisoMasAlto() {
+        return habitacionJPA.obtenerHabitacionesPisoMasAlto();
+    }
+
+    // Consulta 24. ¿Qué habitaciones se encuentran en el piso más bajo?
+    @GetMapping("/piso/minimo")
+    public List<habPorPisoExtremo> obtenerHabitacionesPisoMasBajo() {
+        return habitacionJPA.obtenerHabitacionesPisoMasBajo();
     }
 }

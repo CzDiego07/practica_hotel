@@ -11,6 +11,7 @@ import com.practica.hoteles.Dtos.cantidadTiposHab;
 import com.practica.hoteles.Dtos.capacidadMaxHotel;
 import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
+import com.practica.hoteles.Dtos.habPorPisoExtremo;
 import com.practica.hoteles.Dtos.habPrecio;
 import com.practica.hoteles.Dtos.habPrecioPromedioPorHotel;
 import com.practica.hoteles.Dtos.habTipoPrecio;
@@ -159,4 +160,26 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
                         "INNER JOIN ha.tipo t " +
                         "WHERE t.nombre = :nombreTipo")
         List<busquedaHabTipo> buscarHabPorTipo(@Param("nombreTipo") String nombreTipo);
+
+        // Consulta 23. ¿Qué habitaciones se encuentran en el piso más alto?
+        @Query("SELECT " +
+                        "h.nombre AS hotel, " +
+                        "ha.numero AS habitacion, " +
+                        "ha.piso AS piso, " +
+                        "ha.estado AS estado " +
+                        "FROM Habitaciones ha " +
+                        "INNER JOIN ha.hotel h " +
+                        "WHERE ha.piso = (SELECT MAX(h2.piso) FROM Habitaciones h2)")
+        List<habPorPisoExtremo> obtenerHabitacionesPisoMasAlto();
+
+        // Consulta 24. ¿Qué habitaciones se encuentran en el piso más bajo?
+        @Query("SELECT " +
+                        "h.nombre AS hotel, " +
+                        "ha.numero AS habitacion, " +
+                        "ha.piso AS piso, " +
+                        "ha.estado AS estado " +
+                        "FROM Habitaciones ha " +
+                        "INNER JOIN ha.hotel h " +
+                        "WHERE ha.piso = (SELECT MIN(h2.piso) FROM Habitaciones h2)")
+        List<habPorPisoExtremo> obtenerHabitacionesPisoMasBajo();
 }
