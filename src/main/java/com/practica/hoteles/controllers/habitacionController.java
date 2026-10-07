@@ -1,5 +1,6 @@
 package com.practica.hoteles.controllers;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habEstadoPorPiso;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPorPisoExtremo;
+import com.practica.hoteles.Dtos.habPorRangoPrecio;
 import com.practica.hoteles.Dtos.habPrecio;
 import com.practica.hoteles.Dtos.habPrecioPromedioPorHotel;
 import com.practica.hoteles.Dtos.habTipoPrecio;
@@ -161,5 +163,12 @@ public class habitacionController {
     public List<habEstadoPorPiso> obtenerHabEstadoPorPisoOcupado(@PathVariable Integer piso){
         return  habitacionJPA.obtenerDisponiblesPorPiso(Enum_EstadoHab.Ocupado, piso);
     }
-    
+
+    // Consulta 30. Habitaciones por rango de precio
+    @GetMapping("/precio/rango")
+    public List<habPorRangoPrecio> obtenerPorRangoPrecio(
+            @RequestParam BigDecimal min,
+            @RequestParam BigDecimal max) {
+        return habitacionJPA.obtenerHabitacionesPorRangoPrecio(min, max);
+    }
 }

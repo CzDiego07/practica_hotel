@@ -1,5 +1,6 @@
 package com.practica.hoteles.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,7 @@ import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habEstadoPorPiso;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPorPisoExtremo;
+import com.practica.hoteles.Dtos.habPorRangoPrecio;
 import com.practica.hoteles.Dtos.habPrecio;
 import com.practica.hoteles.Dtos.habPrecioPromedioPorHotel;
 import com.practica.hoteles.Dtos.habTipoPrecio;
@@ -200,4 +202,21 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
                         "AND ha.piso = :piso")
         List<habEstadoPorPiso> obtenerDisponiblesPorPiso(@Param("estado") Enum_EstadoHab estado,
                         @Param("piso") Integer piso);
+
+        // Consulta 30. Habitaciones filtradas por rango de precio (mínimo y máximo)
+        @Query("SELECT " +
+                        "h.nombre AS hotel, " +
+                        "t.nombre AS tipo, " +
+                        "t.capacidad AS capacidad, " +
+                        "ha.piso AS piso, " +
+                        "ha.numero AS numero, " +
+                        "t.precio_base AS precio " +
+                        "FROM Habitaciones ha " +
+                        "INNER JOIN ha.hotel h " +
+                        "INNER JOIN ha.tipo t " +
+                        "WHERE t.precio_base BETWEEN :precioMin AND :precioMax " +
+                        "ORDER BY t.precio_base ASC, h.nombre ASC")
+        List<habPorRangoPrecio> obtenerHabitacionesPorRangoPrecio(
+                        @Param("precioMin") BigDecimal precioMin,
+                        @Param("precioMax") BigDecimal precioMax);
 }
