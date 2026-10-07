@@ -13,6 +13,7 @@ import com.practica.hoteles.Dtos.busquedaHabTipo;
 import com.practica.hoteles.Dtos.cantidadTiposHab;
 import com.practica.hoteles.Dtos.capacidadMaxHotel;
 import com.practica.hoteles.Dtos.habCapacidad;
+import com.practica.hoteles.Dtos.habEstadoPorPiso;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPorPisoExtremo;
 import com.practica.hoteles.Dtos.habPrecio;
@@ -142,4 +143,23 @@ public class habitacionController {
                                                                                         // Disponible o
                                                                                         // Mantenimiento(1 a la vez)
     }
+
+    // Consulta 27. ¿Que habitaciones estan disponibles en un piso X?
+    @GetMapping("/disponibles/{piso}")
+    public List<habEstadoPorPiso> obtenerHabEstadoPorPisoLibres(@PathVariable Integer piso){
+        return  habitacionJPA.obtenerDisponiblesPorPiso(Enum_EstadoHab.Disponible, piso);
+    }
+    
+     // Consulta 28. ¿Que habitaciones estan mantenimiento en un piso X?
+    @GetMapping("/mantenimiento/{piso}")
+    public List<habEstadoPorPiso> obtenerHabEstadoPorPisoMantenimiento(@PathVariable Integer piso){
+        return  habitacionJPA.obtenerDisponiblesPorPiso(Enum_EstadoHab.Mantenimiento, piso);
+    }
+
+     // Consulta 29. ¿Que habitaciones estan ocupadas en un piso X?
+    @GetMapping("/ocupadas/{piso}")
+    public List<habEstadoPorPiso> obtenerHabEstadoPorPisoOcupado(@PathVariable Integer piso){
+        return  habitacionJPA.obtenerDisponiblesPorPiso(Enum_EstadoHab.Ocupado, piso);
+    }
+    
 }

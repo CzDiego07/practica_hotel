@@ -10,6 +10,7 @@ import com.practica.hoteles.Dtos.busquedaHabTipo;
 import com.practica.hoteles.Dtos.cantidadTiposHab;
 import com.practica.hoteles.Dtos.capacidadMaxHotel;
 import com.practica.hoteles.Dtos.habCapacidad;
+import com.practica.hoteles.Dtos.habEstadoPorPiso;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPorPisoExtremo;
 import com.practica.hoteles.Dtos.habPrecio;
@@ -182,4 +183,21 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
                         "INNER JOIN ha.hotel h " +
                         "WHERE ha.piso = (SELECT MIN(h2.piso) FROM Habitaciones h2)")
         List<habPorPisoExtremo> obtenerHabitacionesPisoMasBajo();
+
+        // Consulta 27,28,29. Busqueda de habitaciones que tengan un estado especifico
+        // Modificado para que se pueda hacer una busqueda segun por estado, sea libre,
+        // ocupado o en mantenimiento
+        @Query("SELECT " +
+                        "h.nombre AS hotel, " +
+                        "ha.numero AS habitacion, " +
+                        "ha.piso AS piso, " +
+                        "t.nombre AS tipo, " +
+                        "t.precio_base AS precio " +
+                        "FROM Habitaciones ha " +
+                        "INNER JOIN ha.hotel h " +
+                        "INNER JOIN ha.tipo t " +
+                        "WHERE ha.estado = :estado " +
+                        "AND ha.piso = :piso")
+        List<habEstadoPorPiso> obtenerDisponiblesPorPiso(@Param("estado") Enum_EstadoHab estado,
+                        @Param("piso") Integer piso);
 }
