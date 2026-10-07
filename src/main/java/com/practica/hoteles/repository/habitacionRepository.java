@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.practica.hoteles.Dtos.cantidadTiposHab;
+import com.practica.hoteles.Dtos.capacidadMaxHotel;
 import com.practica.hoteles.Dtos.habCapacidad;
 import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPrecio;
@@ -135,4 +136,16 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
                         "GROUP BY h.id_hotel, h.nombre, t.id_tipo, t.nombre " +
                         "ORDER BY h.nombre ASC, t.nombre ASC")
         List<habTiposPorHotel> obtenerTiposHabitacionPorHotel();
+
+        // Consulta 21. Capacidad maxima de un hotel
+        @Query ("SELECT "+
+                "h.nombre AS hotel, " +
+                "SUM(t.capacidad) AS capacidadMaxima " +
+                "FROM Habitaciones ha "+
+                "INNER JOIN ha.hotel h "+
+                "INNER JOIN ha.tipo t "+
+                "GROUP BY h.id_hotel, h.nombre"
+        )
+        List<capacidadMaxHotel> obtenerCapacidadMaxima();
+
 }
