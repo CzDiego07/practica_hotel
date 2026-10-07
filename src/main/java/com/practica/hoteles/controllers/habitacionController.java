@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.practica.hoteles.Dtos.busquedaHabTipo;
 import com.practica.hoteles.Dtos.cantidadTiposHab;
 import com.practica.hoteles.Dtos.capacidadMaxHotel;
 import com.practica.hoteles.Dtos.habCapacidad;
@@ -71,35 +72,44 @@ public class habitacionController {
     }
 
     // Consutla 14. ¿Cual es la habitacion con precio mas bajo por hotel?
-    @GetMapping ("precio/minimo")
-    public List<habPrecio> obtenerHabPrecioMinimo(){
-        return  habitacionJPA.obtenerHabPrecioBajo();
+    @GetMapping("precio/minimo")
+    public List<habPrecio> obtenerHabPrecioMinimo() {
+        return habitacionJPA.obtenerHabPrecioBajo();
     }
+
     // Consulta 15. ¿Cual es la habitacion con precio mas alto por hotel?
-    @GetMapping ("precio/maximo")
-    public  List <habPrecio> obtenerHabPrecioMaximo(){
+    @GetMapping("precio/maximo")
+    public List<habPrecio> obtenerHabPrecioMaximo() {
         return habitacionJPA.obtenerHabPrecioAlto();
     }
 
     // Consulta 16. ¿Cuantas habitaciones se tiene por tipo en cada hotel?
     @GetMapping("tipo/cantidad")
-    public  List <cantidadTiposHab> obtenerCantidadPorTipo(){
-        return  habitacionJPA.obtenerCantidadTiposPorHotel();
+    public List<cantidadTiposHab> obtenerCantidadPorTipo() {
+        return habitacionJPA.obtenerCantidadTiposPorHotel();
     }
 
     // Consulta 17. ¿Que habitaciones se encuentran en un piso en especifico ?
-    @GetMapping ("piso/{numero}")
-    public List<Habitaciones> obtenerHabitacionesPorPiso(@PathVariable Integer numero){
-        return  habitacionJPA.findByPiso(numero);
+    @GetMapping("piso/{numero}")
+    public List<Habitaciones> obtenerHabitacionesPorPiso(@PathVariable Integer numero) {
+        return habitacionJPA.findByPiso(numero);
     }
-    //Consulta 18. ¿Que tipos de habitaciones se tienen en cada hotel?
-    @GetMapping ("tipos/hotel")
-    public  List<habTiposPorHotel> obtenerTiposPorHotel(){
-        return  habitacionJPA.obtenerTiposHabitacionPorHotel();
+
+    // Consulta 18. ¿Que tipos de habitaciones se tienen en cada hotel?
+    @GetMapping("tipos/hotel")
+    public List<habTiposPorHotel> obtenerTiposPorHotel() {
+        return habitacionJPA.obtenerTiposHabitacionPorHotel();
     }
+
     // Consulta 21. ¿Cual es la capacidad maxima por hotel?
-    @GetMapping ("capacidad/maxima")
-    public  List<capacidadMaxHotel> obtenerCapacidadMaxima(){
+    @GetMapping("capacidad/maxima")
+    public List<capacidadMaxHotel> obtenerCapacidadMaxima() {
         return habitacionJPA.obtenerCapacidadMaxima();
+    }
+
+    // Consulta 22. ¿Que habitaciones pertencen a un tipo especifico?
+    @GetMapping("busqueda/tipo")
+    public List<busquedaHabTipo> busquedaPorTipo(@RequestParam String tipo) {
+        return habitacionJPA.buscarHabPorTipo(tipo);
     }
 }

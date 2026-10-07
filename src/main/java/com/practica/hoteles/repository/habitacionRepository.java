@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.practica.hoteles.Dtos.busquedaHabTipo;
 import com.practica.hoteles.Dtos.cantidadTiposHab;
 import com.practica.hoteles.Dtos.capacidadMaxHotel;
 import com.practica.hoteles.Dtos.habCapacidad;
@@ -126,7 +127,7 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
         // controller Habitacion.
         List<Habitaciones> findByPiso(Integer piso);
 
-        // Consulta 18. Tipos de habiacion que tiene cada hotel 
+        // Consulta 18. Tipos de habiacion que tiene cada hotel
         @Query("SELECT " +
                         "h.nombre AS hotel, " +
                         "t.nombre AS tipo " +
@@ -138,14 +139,24 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
         List<habTiposPorHotel> obtenerTiposHabitacionPorHotel();
 
         // Consulta 21. Capacidad maxima de un hotel
-        @Query ("SELECT "+
-                "h.nombre AS hotel, " +
-                "SUM(t.capacidad) AS capacidadMaxima " +
-                "FROM Habitaciones ha "+
-                "INNER JOIN ha.hotel h "+
-                "INNER JOIN ha.tipo t "+
-                "GROUP BY h.id_hotel, h.nombre"
-        )
+        @Query("SELECT " +
+                        "h.nombre AS hotel, " +
+                        "SUM(t.capacidad) AS capacidadMaxima " +
+                        "FROM Habitaciones ha " +
+                        "INNER JOIN ha.hotel h " +
+                        "INNER JOIN ha.tipo t " +
+                        "GROUP BY h.id_hotel, h.nombre")
         List<capacidadMaxHotel> obtenerCapacidadMaxima();
 
+        // Consulta 22. Busqueda de habitacion segun por un tipo especifico.
+        @Query("SELECT " +
+                        "h.nombre AS hotel, " +
+                        "ha.numero AS habitacion, " +
+                        "t.nombre AS tipo, " +
+                        "t.precio_base AS precio " +
+                        "FROM Habitaciones ha " +
+                        "INNER JOIN ha.hotel h " +
+                        "INNER JOIN ha.tipo t " +
+                        "WHERE t.nombre = :nombreTipo")
+        List<busquedaHabTipo> buscarHabPorTipo(@Param("nombreTipo") String nombreTipo);
 }
