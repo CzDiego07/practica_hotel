@@ -79,13 +79,13 @@ public class hotelController {
         return hotelJPA.contarHabEstadoXPorHotel(Enum_EstadoHab.Ocupado, id); // Obtener conteo de habitaciones Ocupadas
                                                                               // en un hotel en especifico
     }
-    // Consulta 19. Hoteles activos
+    // Consulta 19. ¿Qué Hoteles se encuentran activos? 
     @GetMapping ("/activos")
     public List<Hoteles> obtenerHotelesActivos(){
         return hotelJPA.findByActivo(true);
     }
 
-    // Consulta 20. Hoteles Inactivos
+    // Consulta 20. ¿Que Hoteles se encuentran inactivos?
     @GetMapping ("/inactivos")
     public  List<Hoteles> obtenerHotelesInactivos(){
         return  hotelJPA.findByActivo(false);

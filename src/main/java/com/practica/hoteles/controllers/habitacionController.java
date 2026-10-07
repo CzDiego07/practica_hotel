@@ -50,7 +50,7 @@ public class habitacionController {
         return habitacionJPA.obtenerHotelHabTipoPrecio();
     }
 
-    // Consulta 4. Habitaciones "Disponibles"
+    // Consulta 4. ¿Qué habitaciones están disponibles? 
     // Nota adicional, al llamar a la entidad "Habitaciones", obtendra todos los
     // datos tanto de habitaciones,como de la entidad "Hotel" al tenerla dentro de
     // la misma
