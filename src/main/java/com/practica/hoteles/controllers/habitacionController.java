@@ -113,6 +113,7 @@ public class habitacionController {
     public List<busquedaHabTipo> busquedaPorTipo(@RequestParam String tipo) {
         return habitacionJPA.buscarHabPorTipo(tipo);
     }
+
     // Consulta 23. ¿Qué habitaciones se encuentran en el piso más alto?
     @GetMapping("/piso/maximo")
     public List<habPorPisoExtremo> obtenerHabitacionesPisoMasAlto() {
@@ -123,5 +124,22 @@ public class habitacionController {
     @GetMapping("/piso/minimo")
     public List<habPorPisoExtremo> obtenerHabitacionesPisoMasBajo() {
         return habitacionJPA.obtenerHabitacionesPisoMasBajo();
+    }
+
+    // Consulta 25. ¿Que habitaciones estan en mantenimiento?
+    @GetMapping("/mantenimiento")
+    public List<Habitaciones> obtenerMantenimiento() {
+        return (List<Habitaciones>) habitacionJPA.findByEstado(Enum_EstadoHab.Mantenimiento); // Se puede cambiar por
+                                                                                              // Disponible o
+                                                                                              // Mantenimiento(1 a la
+                                                                                              // vez)
+    }
+
+    // Consulta 26. ¿Que habitaciones estan ocupadas?
+    @GetMapping("/ocupadas")
+    public List<Habitaciones> obtenerOcupadas() {
+        return (List<Habitaciones>) habitacionJPA.findByEstado(Enum_EstadoHab.Ocupado); // Se puede cambiar por
+                                                                                        // Disponible o
+                                                                                        // Mantenimiento(1 a la vez)
     }
 }
