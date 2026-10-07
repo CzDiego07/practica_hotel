@@ -12,6 +12,7 @@ import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPrecio;
 import com.practica.hoteles.Dtos.habPrecioPromedioPorHotel;
 import com.practica.hoteles.Dtos.habTipoPrecio;
+import com.practica.hoteles.Dtos.habTiposPorHotel;
 import com.practica.hoteles.models.Enum_EstadoHab;
 import com.practica.hoteles.models.Habitaciones;
 
@@ -123,4 +124,15 @@ public interface habitacionRepository extends JpaRepository<Habitaciones, Intege
         // Consulta 17. Esta consulta filtra los pisos segun el piso que se asigna en el
         // controller Habitacion.
         List<Habitaciones> findByPiso(Integer piso);
+
+        // Consulta 18. Tipos de habiacion que tiene cada hotel 
+        @Query("SELECT " +
+                        "h.nombre AS hotel, " +
+                        "t.nombre AS tipo " +
+                        "FROM Habitaciones ha " +
+                        "INNER JOIN ha.hotel h " +
+                        "INNER JOIN ha.tipo t " +
+                        "GROUP BY h.id_hotel, h.nombre, t.id_tipo, t.nombre " +
+                        "ORDER BY h.nombre ASC, t.nombre ASC")
+        List<habTiposPorHotel> obtenerTiposHabitacionPorHotel();
 }

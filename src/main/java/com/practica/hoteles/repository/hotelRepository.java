@@ -52,4 +52,7 @@ public interface hotelRepository extends JpaRepository<Hoteles, Integer> {
                         + "GROUP BY h.id_hotel, h.nombre")
         List<habTotalPorHotel> contarHabTotalHotel();
 
+        //Consulta 19. Que Hoteles estan activos actualmente con JPA
+        List<Hoteles> findByActivo(Boolean activo);
+
 }

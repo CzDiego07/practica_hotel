@@ -15,6 +15,7 @@ import com.practica.hoteles.Dtos.habPorHotelEstado;
 import com.practica.hoteles.Dtos.habPrecio;
 import com.practica.hoteles.Dtos.habPrecioPromedioPorHotel;
 import com.practica.hoteles.Dtos.habTipoPrecio;
+import com.practica.hoteles.Dtos.habTiposPorHotel;
 import com.practica.hoteles.models.Enum_EstadoHab;
 import com.practica.hoteles.models.Habitaciones;
 import com.practica.hoteles.repository.habitacionRepository;
@@ -89,5 +90,10 @@ public class habitacionController {
     @GetMapping ("piso/{numero}")
     public List<Habitaciones> obtenerHabitacionesPorPiso(@PathVariable Integer numero){
         return  habitacionJPA.findByPiso(numero);
+    }
+    //Consulta 18. ¿Que tipos de habitaciones se tienen en cada hotel?
+    @GetMapping ("tipos/hotel")
+    public  List<habTiposPorHotel> obtenerTiposPorHotel(){
+        return  habitacionJPA.obtenerTiposHabitacionPorHotel();
     }
 }
